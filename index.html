@@ -15,6 +15,7 @@ body{
     align-items:center;
     background:linear-gradient(135deg,#ffe0ec,#fff6d6);
     font-family:Arial, sans-serif;
+    overflow:hidden;
 }
 
 h1{
@@ -24,25 +25,38 @@ h1{
 
 .pulsera{
     position:relative;
-    width:380px;
-    height:380px;
+    width:420px;
+    height:420px;
+    animation:girar 20s linear infinite;
+}
+
+@keyframes girar{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 .hilo{
     position:absolute;
-    width:280px;
-    height:280px;
+    width:300px;
+    height:300px;
     border:8px solid #c77dff;
     border-radius:50%;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
+    box-shadow:
+        0 0 10px rgba(199,125,255,.4),
+        0 0 20px rgba(199,125,255,.3);
 }
 
 .cuenta{
     position:absolute;
-    width:55px;
-    height:55px;
+    width:60px;
+    height:60px;
     border-radius:50%;
     background:white;
     border:3px solid #ff69b4;
@@ -52,7 +66,20 @@ h1{
     font-weight:bold;
     font-size:24px;
     color:#d63384;
-    box-shadow:0 4px 10px rgba(0,0,0,.2);
+    box-shadow:0 4px 12px rgba(0,0,0,.2);
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+    cursor:pointer;
+}
+
+.cuenta:hover{
+    transform:scale(1.35);
+    z-index:999;
+    box-shadow:
+        0 0 15px #ff69b4,
+        0 0 30px #ff69b4,
+        0 0 45px rgba(255,105,180,.6);
 }
 
 .mensaje{
@@ -71,7 +98,7 @@ h1{
 
 <h1>💖 Feliz Día de las Pulseras 💖</h1>
 
-<div class="pulsera">
+<div class="pulsera" id="pulsera">
     <div class="hilo"></div>
 </div>
 
@@ -84,33 +111,42 @@ h1{
 </div>
 
 <script>
-const pulsera = document.querySelector('.pulsera');
-const letras = [
-    'C','E','L','I','A',
-    '❤','★','❤','★','❤',
-    '★','❤','★','❤','★'
+
+const pulsera = document.getElementById("pulsera");
+
+const cuentas = [
+    "C","E","L","I","A",
+    "❤","★","❤","★","❤",
+    "★","❤","★","❤","★",
+    "❤","★","❤"
 ];
 
-const radio = 140;
-const centro = 190;
+const radio = 160;
+const centro = 210;
 
-letras.forEach((texto, i) => {
+cuentas.forEach((texto,i)=>{
 
-    const angulo = (360 / letras.length) * i;
-    const rad = angulo * Math.PI / 180;
+    const angulo = (360/cuentas.length)*i;
+    const rad = angulo*Math.PI/180;
 
-    const x = centro + radio * Math.cos(rad) - 27;
-    const y = centro + radio * Math.sin(rad) - 27;
+    const x = centro + radio*Math.cos(rad) - 30;
+    const y = centro + radio*Math.sin(rad) - 30;
 
-    const cuenta = document.createElement('div');
-    cuenta.className = 'cuenta';
+    const cuenta = document.createElement("div");
+    cuenta.className = "cuenta";
     cuenta.textContent = texto;
-    cuenta.style.left = x + 'px';
-    cuenta.style.top = y + 'px';
+
+    cuenta.style.left = `${x}px`;
+    cuenta.style.top = `${y}px`;
 
     pulsera.appendChild(cuenta);
+
 });
+
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
